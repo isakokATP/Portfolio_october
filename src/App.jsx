@@ -141,9 +141,16 @@ const globalStyles = `
   .project-info button:hover { transform: scale(1.1); transition: transform 0.2s; }
 
   /* About Section */
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: end; margin-top: 50px; }
+  .about-grid { display: grid; grid-template-columns: .9fr .8fr 1fr; gap: 70px; align-items: center; margin-top: 50px; }
   .page-section h2 span { color: var(--coral); }
-  .about-copy { max-width: 430px; color: var(--muted); font-size: 17px; line-height: 1.7; margin-bottom: 28px; }
+  .about-portrait { position: relative; width: min(100%, 340px); justify-self: center; border: 8px solid var(--paper); background: var(--coral); box-shadow: 12px 12px 0 var(--lime); transform: translateY(18px) rotate(-2deg); }
+  .about-portrait img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; filter: saturate(.9) contrast(1.05); }
+  .about-portrait::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(24, 22, 30, .12) 5px 6px); }
+  .about-portrait-label { position: absolute; z-index: 2; left: 12px; bottom: 12px; padding: 7px 8px 5px; color: var(--ink); background: var(--lime); font: 10px/1.3 var(--pixel); letter-spacing: .12em; }
+  .about-copy { max-width: 470px; color: var(--muted); font-size: 15px; line-height: 1.75; margin-bottom: 28px; }
+  .about-lede { color: var(--paper); font: 21px/1.35 var(--pixel); margin-bottom: 20px; }
+  .about-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+  .about-meta span { border: 1px solid var(--line); padding: 7px 9px 5px; color: var(--lime); font: 9px/1.2 var(--pixel); letter-spacing: .08em; }
   .text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); font: 11px/1 var(--pixel); text-decoration: none; border-bottom: 1px solid var(--lime); padding-bottom: 9px; }
   
   /* Footer */
@@ -165,8 +172,11 @@ const globalStyles = `
     .section-note { text-align: left; }
     .project-grid { grid-template-columns: 1fr; gap: 25px; }
     .project-visual { height: 170px; }
-    .about-grid { grid-template-columns: 1fr; gap: 35px; margin-top: 35px; }
-    .about-copy { font-size: 15px; } 
+    .about-grid { grid-template-columns: 1fr; gap: 45px; margin-top: 35px; }
+    .about-portrait { width: min(78vw, 320px); order: 2; transform: rotate(-2deg); }
+    .about-grid > div:last-child { order: 3; }
+    .about-copy { font-size: 14px; }
+    .about-lede { font-size: 18px; }
     footer { padding: 22px 24px; flex-wrap: wrap; } 
     .category-header { flex-direction: column; align-items: flex-start; }
   }
@@ -177,6 +187,9 @@ const photographyAssets = import.meta.glob('./assets/photography/**/*.{jpg,jpeg,
   query: '?url',
   import: 'default',
 });
+
+// profile data
+const profileImage = photographyAssets['./assets/photography/portrait/IMG_7289.JPG'];
 
 const photoProjects = (folder, code) => Object.entries(photographyAssets)
   .filter(([path]) => path.includes(`/photography/${folder}/`))
@@ -403,9 +416,15 @@ function About() {
         <div>
           <h2 id="about-title">A LITTLE<br /><span>ABOUT ME</span></h2>
         </div>
+        <div className="about-portrait">
+          <img src={profileImage} alt="Portrait of the portfolio owner" />
+          <span className="about-portrait-label">PLAYER_01 / PROFILE</span>
+        </div>
         <div>
-          <p className="about-copy">I’m a multidisciplinary maker who likes turning complex questions into clear, memorable experiences. My toolkit moves between frontend development, qualitative research, and a camera with too many photos on it.</p>
-          <a className="text-link" href="mailto:hello@yourname.dev">START A CONVERSATION <ArrowUpRight size={17} /></a>
+          <p className="about-lede">Hi, I'm Shisanucha Chengsamo. I turn complex problems into clear, memorable digital experiences.</p>
+          <p className="about-copy">I work across system analysis, full-stack development, and database design, connecting user needs to useful products. My toolkit includes JavaScript, Vue, Springboot, and Nest.js, shaped by Agile team environments.</p>
+          <div className="about-meta" aria-label="Skills and interests"><span>IT / KMUTT</span><span>FULL-STACK</span><span>PHOTO + VIDEO</span></div>
+          <a className="text-link" href="mailto:shisanucha.chengsamo@gmail.com">START A CONVERSATION <ArrowUpRight size={17} /></a>
         </div>
       </div>
     </main>
