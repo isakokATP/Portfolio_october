@@ -189,7 +189,7 @@ const photographyAssets = import.meta.glob('./assets/photography/**/*.{jpg,jpeg,
 });
 
 // profile data
-const profileImage = photographyAssets['./assets/photography/portrait/IMG_7289.JPG'];
+const profileImage = photographyAssets['./assets/photography/Aboutme/IMG_7289.JPG'];
 
 const photoProjects = (folder, code) => Object.entries(photographyAssets)
   .filter(([path]) => path.includes(`/photography/${folder}/`))
